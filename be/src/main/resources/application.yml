@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: demo
+  datasource:
+    url: jdbc:postgresql://localhost:5432/demos
+
+
+#  spring.datasource.url=jdbc:postgresql://<HOST>:<PORT>/<DATABASE_NAME>
+#  spring.datasource.username=<YOUR_USERNAME>
+#  spring.datasource.password=<YOUR_PASSWORD>
