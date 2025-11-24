@@ -1,9 +1,9 @@
 
-CREATE TYPE gender IF NOT EXISTS AS ENUM(
+CREATE TYPE  gender AS ENUM(
     'M','F'
-)
+);
 
-CREATE TABLE patients IF NOT EXISTS(
+CREATE TABLE IF NOT EXISTS patients (
     pid UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
