@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,4 +29,43 @@ public interface PatientRepository extends JpaRepository<PatientEntity, UUID> {
     """)
     @Modifying
     void inactivePatient(@Param("id") UUID id);
+
+    @Query(
+            nativeQuery = true,
+            value = """
+                    SELECT * FROM patients
+                    WHERE
+                        (:fname is null OR first_name LIKE %:fname%)
+                         AND
+                        (:lname is null OR last_name LIKE %:lname%)
+                        AND
+                        (:pid is null OR pid::text LIKE %:pid%)
+                    ORDER BY created_at DESC
+                    OFFSET :offset
+                    LIMIT :limit
+                    """
+    )
+    List<PatientEntity> findAll(
+            @Param("fname") String firstName,
+            @Param("lname") String lastName,
+            @Param("pid") String id,
+            @Param("offset") int offset,
+            @Param("limit") int limit
+            );
+
+    @Query(
+            nativeQuery = true,
+            value = """
+                    SELECT COUNT(pid) FROM patients
+                    WHERE
+                        (:fname is null OR first_name LIKE %:fname%)
+                         AND
+                        (:lname is null OR last_name LIKE %:lname%)
+                        AND
+                        (:pid is null OR pid::text LIKE %:pid%)
+                    """
+    )
+    long count(@Param("fname") String firstName,
+              @Param("lname") String lastName,
+              @Param("pid") String id);
 }

@@ -27,6 +27,16 @@ public class CreatePatientResponse {
     private String createdAt;
     private String updatedAt;
 
+    public static CreatePatientResponse partial(PatientEntity entity){
+        return CreatePatientResponse.builder()
+                .pid(entity.getPid().toString())
+                .firstName(entity.getFirstName())
+                .lastName(entity.getLastName())
+                .createdAt(Instant.ofEpochMilli(entity.getCreatedAt()).toString())
+                .updatedAt(Instant.ofEpochMilli(entity.getUpdatedAt()).toString())
+                .build();
+    }
+
     public static CreatePatientResponse from(PatientEntity entity){
 
         return CreatePatientResponse.builder()

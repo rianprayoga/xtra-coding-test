@@ -110,14 +110,16 @@ public class PatientService {
     }
 
 
-    public PageResult<CreatePatientResponse> getPatients(Integer page, Integer size, String firstName, String lastName, String pid) {
+    public PageResult<CreatePatientResponse> getPatients(
+            Integer page, Integer size, String firstName, String lastName, String pid) {
 
-        Sort sort = Sort.by("createdAt").descending();
-        PageRequest pageRequest = PageRequest.of(page, size, sort);
+        List<PatientEntity> entities = patientRepository
+                .findAll(firstName, lastName, pid, page, size);
+        long count = patientRepository.count(firstName, lastName, pid);
 
-        Page<PatientEntity> entityPage = patientRepository.findAll(pageRequest);
-        List<CreatePatientResponse> content = entityPage.getContent().stream().map(CreatePatientResponse::from).toList();
+        List<CreatePatientResponse> content = entities
+                .stream().map(CreatePatientResponse::partial).toList();
 
-        return new PageResult<>(content, entityPage.getTotalElements());
+        return new PageResult<>(content, count);
     }
 }
