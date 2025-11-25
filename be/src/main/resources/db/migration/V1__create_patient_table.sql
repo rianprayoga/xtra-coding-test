@@ -14,5 +14,7 @@ CREATE TABLE IF NOT EXISTS patients (
     address VARCHAR(100) NOT NULL,
     suburb VARCHAR(100) NOT NULL,
     state VARCHAR(100) NOT NULL,
-    postcode VARCHAR(4) NOT NULL
+    postcode VARCHAR(4) NOT NULL,
+    created_at  BIGINT  NOT NULL ,
+    updated_at  BIGINT  NOT NULL
 );

@@ -1,11 +1,17 @@
 package com.xtra.demo.data.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnTransformer;
 
-import java.util.Date;
+import java.math.BigInteger;
+import java.sql.Date;
 import java.util.UUID;
 
 @Table(name = "patients")
@@ -30,5 +36,10 @@ public class PatientEntity {
     private String suburb;
     private String state;
     private String postcode;
+    @Column(name = "created_at")
+    private Long createdAt;
+    @Column(name = "updated_at")
+    private Long updatedAt;
+    private int version;
 
 }
