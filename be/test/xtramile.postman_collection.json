@@ -1,0 +1,250 @@
+{
+	"info": {
+		"_postman_id": "8791baf6-a661-4d65-b91f-2ae21d3e898c",
+		"name": "xtramile",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2876214"
+	},
+	"item": [
+		{
+			"name": "create patient",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function randomString(minValue, maxValue, dataSet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ') {",
+							"    if (!minValue) {",
+							"        minValue = 20;",
+							"        maxValue = 20;",
+							"    }",
+							"",
+							"    if (!maxValue) {",
+							"        maxValue = minValue;",
+							"    }",
+							"",
+							"    let length = _.random(minValue, maxValue),",
+							"        randomString = \"\";",
+							"",
+							"    for (let i = 0; i < length; i++)",
+							"        randomString += dataSet.charAt(Math.floor(Math.random() * dataSet.length));",
+							"    return randomString;",
+							"}",
+							"",
+							"pm.variables.set('fname', randomString(10,10));",
+							"pm.variables.set('lname', randomString(10,10));",
+							"pm.variables.set('phone', randomString(15,15, '1234567890'));"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"{{fname}}\",\n    \"lastName\": \"{{lname}}\",    \n    \"dateOfBirth\": \"1995-12-01\",\n    \"gender\": \"M\",\n    \"phone\": \"{{phone}}\",\n    \"address\": \"john stree\",\n    \"suburb\": \"somewhere only we know\",\n    \"state\": \"victoria\",\n    \"postcode\": \"9999\"    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/patients",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"patients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get patient",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"john\",\n    \"lastName\": \"doe\",    \n    \"dateOfBirth\": \"1995-12-01\",\n    \"gender\": \"M\",\n    \"phone\": \"123456789123456\",\n    \"address\": \"john stree\",\n    \"suburb\": \"somewhere only we know\",\n    \"state\": \"victoria\",\n    \"postcode\": \"9999\"    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/patients/04af207d-e20e-4328-9361-867a892ae5ab",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"patients",
+						"04af207d-e20e-4328-9361-867a892ae5ab"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put patient",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"john\",\n    \"lastName\": \"doe\",\n    \"dateOfBirth\": \"1995-12-01\",\n    \"gender\": \"M\",\n    \"phone\": \"123456789123456\",\n    \"address\": \"john stree\",\n    \"suburb\": \"somewhere only we know\",\n    \"state\": \"victoria\",\n    \"postcode\": \"9999\",\n    \"version\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/patients/04af207d-e20e-4328-9361-867a892ae5ab",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"patients",
+						"04af207d-e20e-4328-9361-867a892ae5ab"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put patient",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"john\",\n    \"lastName\": \"doe\",\n    \"dateOfBirth\": \"1995-12-01\",\n    \"gender\": \"M\",\n    \"phone\": \"123456789123456\",\n    \"address\": \"john stree\",\n    \"suburb\": \"somewhere only we know\",\n    \"state\": \"victoria\",\n    \"postcode\": \"9999\",\n    \"version\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/patients/04af207d-e20e-4328-9361-867a892ae5ab",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"patients",
+						"04af207d-e20e-4328-9361-867a892ae5ab"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get patients",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"john\",\n    \"lastName\": \"doe\",    \n    \"dateOfBirth\": \"1995-12-01\",\n    \"gender\": \"M\",\n    \"phone\": \"123456789123456\",\n    \"address\": \"john stree\",\n    \"suburb\": \"somewhere only we know\",\n    \"state\": \"victoria\",\n    \"postcode\": \"9999\"    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/patients?offset=0&size=10&pid=c8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"patients"
+					],
+					"query": [
+						{
+							"key": "offset",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						},
+						{
+							"key": "pid",
+							"value": "c8"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
