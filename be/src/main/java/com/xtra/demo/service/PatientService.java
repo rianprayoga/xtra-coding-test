@@ -11,6 +11,7 @@ import com.xtra.demo.errors.http.ConflictException;
 import com.xtra.demo.errors.http.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.UUID;
@@ -36,6 +37,7 @@ public class PatientService {
         setBasicAttribute(entity, request);
         entity.setCreatedAt(System.currentTimeMillis());
         entity.setUpdatedAt(System.currentTimeMillis());
+        entity.setActive(true);
 
         PatientEntity patientEntity = patientRepository.save(entity);
         return CreatePatientResponse.from(patientEntity);
@@ -52,7 +54,7 @@ public class PatientService {
     public CreatePatientResponse getPatient(String id){
 
         PatientEntity entity = patientRepository
-                .findById(parseString(id))
+                .findByIdAndActive(parseString(id))
                 .orElseThrow(() -> new NotFoundException("Patient with id %s not found.".formatted(id)));
 
         return CreatePatientResponse.from(entity);
@@ -61,7 +63,7 @@ public class PatientService {
     public CreatePatientResponse updatePatient(String id, UpdatePatientRequest request){
 
         PatientEntity entity = patientRepository
-                .findById(parseString(id))
+                .findByIdAndActive(parseString(id))
                 .orElseThrow(() -> new NotFoundException("Patient with id %s not found.".formatted(id)));
 
         if (entity.getVersion() != request.getVersion()){
@@ -92,5 +94,11 @@ public class PatientService {
         entity.setSuburb(request.getSuburb());
         entity.setState(request.getState());
         entity.setPostcode(request.getPostcode());
+    }
+
+    @Transactional
+    public void deletePatient(String id){
+        UUID uuid = parseString(id);
+        patientRepository.inactivePatient(uuid);
     }
 }

@@ -9,8 +9,6 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnTransformer;
-
-import java.math.BigInteger;
 import java.sql.Date;
 import java.util.UUID;
 
@@ -41,5 +39,6 @@ public class PatientEntity {
     @Column(name = "updated_at")
     private Long updatedAt;
     private int version;
+    private boolean active;
 
 }
