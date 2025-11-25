@@ -1,5 +1,6 @@
 package com.xtra.demo.service;
 
+import com.xtra.demo.controller.PageResult;
 import com.xtra.demo.controller.patient.dto.CreatePatientRequest;
 import com.xtra.demo.controller.patient.dto.CreatePatientResponse;
 import com.xtra.demo.controller.patient.dto.UpdatePatientRequest;
@@ -10,11 +11,17 @@ import com.xtra.demo.errors.http.BadRequestException;
 import com.xtra.demo.errors.http.ConflictException;
 import com.xtra.demo.errors.http.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
+
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Service
 public class PatientService {
@@ -100,5 +107,17 @@ public class PatientService {
     public void deletePatient(String id){
         UUID uuid = parseString(id);
         patientRepository.inactivePatient(uuid);
+    }
+
+
+    public PageResult<CreatePatientResponse> getPatients(Integer page, Integer size, String firstName, String lastName, String pid) {
+
+        Sort sort = Sort.by("createdAt").descending();
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
+
+        Page<PatientEntity> entityPage = patientRepository.findAll(pageRequest);
+        List<CreatePatientResponse> content = entityPage.getContent().stream().map(CreatePatientResponse::from).toList();
+
+        return new PageResult<>(content, entityPage.getTotalElements());
     }
 }

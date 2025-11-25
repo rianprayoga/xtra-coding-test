@@ -1,11 +1,13 @@
 package com.xtra.demo.controller.patient;
 
+import com.xtra.demo.controller.PageResult;
 import com.xtra.demo.controller.patient.dto.CreatePatientRequest;
 import com.xtra.demo.controller.patient.dto.CreatePatientResponse;
 import com.xtra.demo.controller.patient.dto.UpdatePatientRequest;
 import com.xtra.demo.service.PatientService;
 import jakarta.validation.Valid;
 
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -55,6 +57,22 @@ public class PatientController {
         patientService.deletePatient(patientId);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/patients")
+    public ResponseEntity<PageResult<CreatePatientResponse>> getPatients(
+            @RequestParam(value = "firstName", required = false) String firstName,
+            @RequestParam(value = "lastName", required = false) String lastName,
+            @RequestParam(value = "pid", required = false) String pid,
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "size", required = false) Integer size
+            ){
+
+        page = page == null? 0: page;
+        size = size == null? 5: size;
+
+        PageResult<CreatePatientResponse> response = patientService.getPatients(page, size, firstName, lastName, pid);
+        return ResponseEntity.ok(response);
     }
 
 
