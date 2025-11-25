@@ -35,6 +35,8 @@ public interface PatientRepository extends JpaRepository<PatientEntity, UUID> {
             value = """
                     SELECT * FROM patients
                     WHERE
+                        active = true
+                        AND
                         (:fname is null OR first_name LIKE %:fname%)
                          AND
                         (:lname is null OR last_name LIKE %:lname%)
@@ -58,6 +60,8 @@ public interface PatientRepository extends JpaRepository<PatientEntity, UUID> {
             value = """
                     SELECT COUNT(pid) FROM patients
                     WHERE
+                        active = true
+                        AND
                         (:fname is null OR first_name LIKE %:fname%)
                          AND
                         (:lname is null OR last_name LIKE %:lname%)

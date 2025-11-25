@@ -21,7 +21,7 @@ public class DobValidator implements ConstraintValidator<ValidDob, String> {
         SimpleDateFormat sdf = new SimpleDateFormat(DOB_PATTERN);
         try {
             sdf.parse(date);
-        } catch (ParseException e) {
+        } catch (Exception e) {
             return false;
         }
 

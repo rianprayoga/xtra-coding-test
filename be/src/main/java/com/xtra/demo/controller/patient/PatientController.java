@@ -42,7 +42,7 @@ public class PatientController {
 
     @PutMapping("/patients/{patientId}")
     public ResponseEntity<CreatePatientResponse> updatePatient(
-            @PathVariable String patientId, @RequestBody UpdatePatientRequest request){
+            @PathVariable String patientId, @Valid @RequestBody UpdatePatientRequest request){
 
         CreatePatientResponse response = patientService.updatePatient(patientId, request);
         return ResponseEntity.ok(response);
