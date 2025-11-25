@@ -1,11 +1,6 @@
 package com.xtra.demo.data.entity;
 
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnTransformer;
@@ -18,6 +13,7 @@ import java.util.UUID;
 @Setter
 public class PatientEntity {
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private UUID pid;
     @Column(name = "first_name")
