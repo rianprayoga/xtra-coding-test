@@ -11,17 +11,12 @@ import com.xtra.demo.errors.http.BadRequestException;
 import com.xtra.demo.errors.http.ConflictException;
 import com.xtra.demo.errors.http.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
-
-import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Service
 public class PatientService {
@@ -40,7 +35,6 @@ public class PatientService {
         }
 
         PatientEntity entity = new PatientEntity();
-        entity.setPid(UUID.randomUUID());
         setBasicAttribute(entity, request);
         entity.setCreatedAt(System.currentTimeMillis());
         entity.setUpdatedAt(System.currentTimeMillis());
