@@ -1,5 +1,6 @@
 
-CREATE TYPE  gender AS ENUM(
+DROP TYPE IF EXISTS gender;
+CREATE TYPE gender AS ENUM(
     'M','F'
 );
 
