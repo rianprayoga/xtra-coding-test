@@ -5,7 +5,6 @@ import com.xtra.demo.data.entity.Gender;
 import com.xtra.demo.errors.validation.ValidDob;
 import com.xtra.demo.errors.validation.ValueOfEnum;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

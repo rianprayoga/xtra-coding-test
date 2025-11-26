@@ -7,6 +7,7 @@ import com.xtra.demo.controller.patient.dto.UpdatePatientRequest;
 import com.xtra.demo.service.PatientService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +20,17 @@ import static com.xtra.demo.controller.ControllerConstant.V1;
 public class PatientController {
 
     private final PatientService patientService;
+    private final int defaultOffset;
+    private final int defaultSize;
 
     @Autowired
-    public PatientController(PatientService patientService) {
+    public PatientController(
+            PatientService patientService,
+            @Value("${pagination.offset}") int defaultOffset,
+            @Value("${pagination.size}") int defaultSize) {
         this.patientService = patientService;
+        this.defaultOffset = defaultOffset;
+        this.defaultSize = defaultSize;
     }
 
     @PostMapping("/patients")
@@ -66,8 +74,8 @@ public class PatientController {
             @RequestParam(value = "size", required = false) Integer size
             ){
 
-        offset = offset == null? 0: offset;
-        size = size == null? 5: size;
+        offset = offset == null? defaultOffset: offset;
+        size = size == null? defaultSize: size;
 
         PageResult<CreatePatientResponse> response = patientService
                 .getPatients(offset, size, firstName, lastName, pid);
