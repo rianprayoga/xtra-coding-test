@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {PatientService} from '../../patient.service';
-import {Observable} from 'rxjs';
 import {PatientPartialResponse, Page} from '../../patient';
 
 @Component({
@@ -13,20 +12,23 @@ import {PatientPartialResponse, Page} from '../../patient';
   styleUrl: './view-patient.css',
 })
 export class ViewPatient {
-  page: Page<PatientPartialResponse> | undefined;
+
+  data: PatientPartialResponse[] = [];
+  total: number = 0;
 
   constructor(private patientService: PatientService) { }
 
   ngOnInit() :void{
-    this.patientService.getPatients().subscribe((data) =>{
-        this.page = data
+    this.patientService.getPatients().subscribe((response) =>{
+      this.data = response.data;
+      this.total = response.total;
     })
   }
 
   deletePatient(patientId:string):void {
     this.patientService.deletePatient(patientId)
       .pipe().subscribe(
-        result => {
+        () => {
           this.ngOnInit()
         }
     )

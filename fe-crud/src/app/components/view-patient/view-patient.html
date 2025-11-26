@@ -33,11 +33,11 @@
             <th scope="col">Last Name</th>
             <th scope="col">Created At</th>
             <th scope="col">Update At</th>
-            <th scope="col">Actionss</th>
+            <th scope="col">Actions </th>
           </tr>
         </thead>
         <tbody>
-          @for (p of page?.data; track p.pid;) {
+          @for (p of data; track p.pid;) {
             <tr>
               <th scope="row">{{p.pid}}</th>
               <td>{{p.firstName}}</td>
