@@ -1,0 +1,23 @@
+CREATE TYPE gender AS ENUM(
+    'M','F'
+);
+
+CREATE TABLE patient_demographic (
+    id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    gender Gender NOT NULL
+);
+
+CREATE TABLE patient_identifier (
+    id SERIAL PRIMARY KEY,
+    patient_id INTEGER NOT NULL REFERENCES patient_demographic (id),
+    national_id VARCHAR(50) NOT NULL,
+    email VARCHAR(50),
+    phone VARCHAR(50)
+);
+
+CREATE TABLE patient_linking (
+    id SERIAL PRIMARY KEY,
+    linking_group  integer[],
+);
